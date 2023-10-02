@@ -1,44 +1,71 @@
-Graphics3D 640,480,32,2
+Graphics3D 800,600,32,2
 SetBuffer BackBuffer()
 
+;make camera
 camera = CreateCamera()
-CameraClsColor camera, 0,0,255
 
-light = CreateLight()
+;make entitys
+light = CreateLight(32)
+earth = CreateSphere(32)
+sun = CreateSphere(32)
+moon = CreateSphere(32)
+mars = CreateSphere(32)
+space = CreateSphere(32)
 
-sphere = CreateSphere()
+;load assets
+player = LoadMesh("obj_file.3ds")
 
-cylinder = CreateCylinder(32)
+texearth = LoadTexture("earth.jpg")
+texmoon = LoadTexture("moon.jpg") 
+texsun = LoadTexture("sun.jpg")
+texmars = LoadTexture("mars.jpg")
+texspace = LoadTexture("space.jpg")
 
-cube = CreateCube()
+;load entitys
+PositionEntity player, 8,0,5
+PositionEntity moon, 7,0,6
+PositionEntity sun, -20,0,5
+PositionEntity earth, 5,0,5
+PositionEntity mars, 10,0,4
+PositionEntity space , 0,0,0
 
-cone = CreateCone(32)
+ScaleEntity player, 0.1,0.1,0.1
+ScaleEntity moon, 0.5,0.5,0.5
+ScaleEntity sun, 15,15,15
+ScaleEntity mars , 0.85,0.85,0.85
+ScaleEntity space , -1000,-1000,-1000
 
-PositionEntity cone, 0,-2,5
-PositionEntity cube, 2,0,5
-PositionEntity cylinder, -2,0,5
-PositionEntity sphere, 0,0,5
+EntityTexture earth ,texearth 
+EntityTexture moon ,texmoon
+EntityTexture sun ,texsun
+EntityTexture mars ,texmars
+EntityTexture space ,texspace 
 
-ScaleEntity sphere, 0.5,0.5,.5
+RotateEntity sun, -90,0,0
+RotateEntity player, -90,0,0
 
-EntityColor sphere, 0,0,255 ; r,g,b
-EntityColor cube, 0,255,0 ; r,g,b
-EntityColor cylinder, 255,0,0 ; r,g,b
-EntityColor Cone, 255,0,255 ; r,g,b
-
-EntityAlpha cone,0.75
-EntityAlpha cube,0.4
-EntityAlpha cylinder,1
-
-
-
+;start game loop
 While Not KeyDown(1)
 
-;sphere cumtroller
-If KeyDown(203) Then TranslateEntity sphere, -0.1,0,0
-If KeyDown(205) Then TranslateEntity sphere, 0.1,0,0
-If KeyDown(205) Then TranslateEntity sphere, 0,-0.1,0
-If KeyDown(200) Then TranslateEntity sphere, 0,0.1,0
+;chase camera
+PositionEntity camera,EntityX(player),EntityY(player),EntityZ(player)
+MoveEntity camera,0,0,-3
+
+;funny wasd camera rotate
+If KeyHit(30) Then RotateEntity camera, -90,0,0
+If KeyHit(32) Then RotateEntity camera, 90,0,0
+If KeyHit(31) Then RotateEntity camera, 0,-90,0
+If KeyHit(17) Then RotateEntity camera, 0,90,0
+
+;sphere controller
+If KeyDown(203) Then TranslateEntity player, -0.1,0,0
+If KeyDown(205) Then TranslateEntity player, 0.1,0,0
+If KeyDown(208) Then TranslateEntity player, 0,-0.1,0
+If KeyDown(200) Then TranslateEntity player, 0,0.1,0
+If KeyDown(203) Then RotateEntity player, -30,0,0
+If KeyDown(205) Then RotateEntity player, 30,0,0
+If KeyDown(208) Then RotateEntity player, 0,-30,0
+If KeyDown(200) Then RotateEntity player, 0,30,0
 
 RenderWorld
 Flip
