@@ -13,13 +13,13 @@ mars = CreateSphere(32)
 space = CreateSphere(32)
 
 ;load assets
-player = LoadMesh("obj_file.3ds")
+player = LoadMesh("assets/obj_file.3ds")
 
-texearth = LoadTexture("earth.jpg")
-texmoon = LoadTexture("moon.jpg") 
-texsun = LoadTexture("sun.jpg")
-texmars = LoadTexture("mars.jpg")
-texspace = LoadTexture("space.jpg")
+texearth = LoadTexture("assets/earth.jpg")
+texmoon = LoadTexture("assets/moon.jpg") 
+texsun = LoadTexture("assets/sun.jpg")
+texmars = LoadTexture("assets/mars.jpg")
+texspace = LoadTexture("assets/space.jpg")
 
 ;load entitys
 PositionEntity player, 8,0,5
